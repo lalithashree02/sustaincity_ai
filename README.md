@@ -22,7 +22,3 @@ Tech Stack
 * Frontend Template System: Jinja2, HTML5, CSS3
 
 ---
-├── schema.sql           # Database tables and relationship layouts
-└── wsgi.py              # Web Server Interface entrance for cloud boots
-
----
