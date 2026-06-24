@@ -17,12 +17,18 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB Limit
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-# Database Connection Helper
+# ==========================================
+# 🗄️ Database Connection Helper (Updated for Aiven SSL)
+# ==========================================
+
 db_config = {
     'host': os.getenv('DB_HOST'),
+    'port': int(os.getenv('DB_PORT', 3306)),   # Fallback defaults to 3306 if not set
     'user': os.getenv('DB_USER'),
     'password': os.getenv('DB_PASSWORD'),
-    'database': os.getenv('DB_NAME')
+    'database': os.getenv('DB_NAME'),
+    'ssl_ca': None,        # Setting this tells mysql.connector to enable SSL
+    'ssl_disabled': False   # Forces SSL connection required by Aiven
 }
 
 def get_db_connection():
@@ -92,7 +98,7 @@ def run_live_gemini_analysis(image_path, text_location_context):
 
 
 # ==========================================
-# Application Routing Logic
+# 🚀 Application Routing Logic
 # ==========================================
 
 @app.route('/')
@@ -290,5 +296,13 @@ def admin_dashboard():
     return render_template('admin_dashboard.html', complaints=all_complaints)
 
 
+# ==========================================
+# 🛠️ Server Runner (Configured for Render Production Deployment)
+# ==========================================
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Render binds your web application dynamically to an assigned 'PORT' environment variable.
+    # Locally, it defaults back to port 5000.
+    port = int(os.environ.get("PORT", 5000))
+    
+    # We turn off debug=True for deployment stability and security in cloud staging.
+    app.run(host='0.0.0.0', port=port, debug=False)
