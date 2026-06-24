@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SustainCity AI - Smart Civic Management</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background-color: #f8fafc; color: #1e293b; }
+        .hero { background: linear-gradient(135deg, #1e3a8a 0%, #10b981 100%); color: white; padding: 60px 20px; text-align: center; }
+        .hero h1 { margin: 0; font-size: 42px; font-weight: 800; letter-spacing: -1px; }
+        .hero p { font-size: 18px; margin: 15px 0 30px 0; opacity: 0.9; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px; }
+        .card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); text-align: center; border-top: 5px solid #3b82f6; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .card.green { border-top-color: #10b981; }
+        .card.dark { border-top-color: #334155; }
+        .card h2 { margin-top: 0; color: #0f172a; }
+        .card p { color: #64748b; line-height: 1.5; margin-bottom: 25px; }
+        .btn { display: inline-block; background-color: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; transition: background 0.2s; }
+        .btn:hover { background-color: #2563eb; }
+        .btn.green { background-color: #10b981; }
+        .btn.green:hover { background-color: #059669; }
+        .btn.dark { background-color: #334155; }
+        .btn.dark:hover { background-color: #1e293b; }
+        .footer { text-align: center; padding: 40px 20px; color: #94a3b8; font-size: 14px; border-top: 1px solid #e2e8f0; margin-top: 60px; }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1>🏙️ SustainCity AI</h1>
+        <p>Building Smarter, Greener, and More Accountable Indian Cities using Artificial Intelligence</p>
+    </div>
+
+    <div class="container">
+        <div class="grid">
+            
+            <div class="card">
+                <h2>✍️ Raise a Complaint</h2>
+                <p>Snap a photo of an urban grievance (potholes, garbage leaks, broken lights). Upload it with your live coordinates or manual address to alert city teams.</p>
+                <a href="/complaint" class="btn">File Public Ticket</a>
+            </div>
+
+            <div class="card green">
+                <h2>📊 Public Dashboard</h2>
+                <p>Track municipal resource allocation, check public grievance status records, and examine environmental savings stats dynamically from our open ledger.</p>
+                <a href="/public-dashboard" class="btn green">View Live Status</a>
+            </div>
+
+            <div class="card dark">
+                <h2>🤖 Knowledge Assistant</h2>
+                <p>Have structural urban planning questions? Ask our AI engine about domestic waste segregation rules, compost mechanics, or green practices.</p>
+                <a href="/knowledge-assistant" class="btn dark">Chat with AI</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>SustainCity AI © 2026 • Made in India for Sustainable Municipal Development</p>
+    </div>
+
+</body>
+</html>

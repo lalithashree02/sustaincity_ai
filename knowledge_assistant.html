@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SustainCity AI - Knowledge Assistant</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background-color: #f1f5f9; display: flex; flex-direction: column; height: 100vh; }
+        .header { background: #1e293b; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .header h2 { margin: 0; font-size: 20px; display: flex; align-items: center; gap: 10px; }
+        .back-link { color: #94a3b8; text-decoration: none; font-weight: 500; }
+        .back-link:hover { color: white; }
+        .chat-container { flex: 1; max-width: 800px; width: 100%; margin: 20px auto; background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden; }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .message { max-width: 75%; padding: 12px 16px; border-radius: 8px; line-height: 1.5; font-size: 15px; }
+        .message.bot { background-color: #f8fafc; color: #1e293b; align-self: flex-start; border-left: 4px solid #10b981; }
+        .message.user { background-color: #3b82f6; color: white; align-self: flex-end; }
+        .chat-input-area { padding: 15px 20px; border-top: 1px solid #e2e8f0; background: #f8fafc; display: flex; gap: 10px; }
+        .chat-input-area input { flex: 1; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; outline: none; }
+        .chat-input-area input:focus { border-color: #3b82f6; }
+        .send-btn { background: #3b82f6; color: white; border: none; padding: 0 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; }
+        .send-btn:hover { background: #2563eb; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2>🌱 Civic & Sustainability AI Assistant</h2>
+        <a href="/" class="back-link">← Home</a>
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-messages" id="chat-box">
+            <div class="message bot">
+                Hello! I am your SustainCity AI assistant. Ask me anything about waste sorting, municipal guidelines, carbon footprints, or how to address local environmental concerns.
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="user-input" placeholder="Type your sustainability or civic question here..." onkeypress="handleKeyPress(event)">
+            <button class="send-btn" onclick="sendMessage()">Ask AI</button>
+        </div>
+    </div>
+
+    <script>
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        function sendMessage() {
+            const inputField = document.getElementById('user-input');
+            const messageText = inputField.value.trim();
+            if (!messageText) return;
+
+            const chatBox = document.getElementById('chat-box');
+
+            // 1. Append User Text to Screen
+            const userDiv = document.createElement('div');
+            userDiv.className = 'message user';
+            userDiv.innerText = messageText;
+            chatBox.appendChild(userDiv);
+            
+            inputField.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // 2. Fetch Dynamic AI Reply via Backend API Integration Async Loop
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: messageText })
+            })
+            .then(res => res.json())
+            .then(data => {
+                const botDiv = document.createElement('div');
+                botDiv.className = 'message bot';
+                botDiv.innerText = data.reply || "I am processing your query. Please check your network connection.";
+                chatBox.appendChild(botDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            })
+            .catch(() => {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'message bot';
+                errorDiv.innerText = "Error connecting with the core AI server engine.";
+                chatBox.appendChild(errorDiv);
+            });
+        }
+    </script>
+</body>
+</html>

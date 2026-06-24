@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Department Control Panel Workspace Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background: #f8fafc; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #cbd5e1; padding-bottom: 15px; margin-bottom: 20px; }
+        table { width:100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background: #334155; color: white; }
+        select { padding: 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-weight: bold; }
+        .action-btn { background: #10b981; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; margin-left: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2>🛠️ Operations Workspace: <span style="color:#2563eb;">{{ dept_name }}</span></h2>
+        <a href="/logout" style="color:red; text-decoration: none; font-weight: bold;">Logout Account Portal</a>
+    </div>
+
+    <h3>📥 Incoming Auto-Routed Complaints Queue Matrix</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Identified Risk Matrix</th>
+                <th>Context Abstract Details</th>
+                <th>Location Track</th>
+                <th>Administrative Update Control Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>#{{ task.id }}</td>
+                <td><strong>{{ task.detected_issue }}</strong> <small>[Priority: {{ task.severity }}]</small></td>
+                <td>{{ task.complaint_abstract }}</td>
+                <td>
+                    {% if task.full_address %}{{ task.full_address }}{% else %}📍 coordinates: { {{ task.latitude }}, {{ task.longitude }} }{% endif %}
+                </td>
+                <td>
+                    <form action="/update-status" method="POST" style="display: inline-flex;">
+                        <input type="hidden" name="complaint_id" value="{{ task.id }}">
+                        <select name="status">
+                            <option value="Pending" {% if task.status == 'Pending' %}selected{% endif %}>Pending Approval</option>
+                            <option value="Assigned" {% if task.status == 'Assigned' %}selected{% endif %}>Assigned Dispatch</option>
+                            <option value="In Progress" {% if task.status == 'In Progress' %}selected{% endif %}>In Progress Maintenance</option>
+                            <option value="Resolved" {% if task.status == 'Resolved' %}selected{% endif %}>Resolved / Complete</option>
+                        </select>
+                        <button type="submit" class="action-btn">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
