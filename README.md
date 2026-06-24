@@ -22,21 +22,6 @@ Tech Stack
 * Frontend Template System: Jinja2, HTML5, CSS3
 
 ---
-
-Project Architecture
-
-SustainCity/
-├── static/              # Asset files (CSS, client-side scripts, images)
-├── templates/           # Jinja HTML UI templates
-│   ├── admin_dashboard.html
-│   ├── complaint.html
-│   ├── index.html
-│   ├── knowledge_assistant.html
-│   ├── login.html
-│   └── public_dashboard.html
-│
-├── app.py               # Core application logic and AI pipeline endpoints
-├── requirements.txt     # Complete environment package dependencies
 ├── schema.sql           # Database tables and relationship layouts
 └── wsgi.py              # Web Server Interface entrance for cloud boots
 
